@@ -56,6 +56,8 @@ args = gymutil.parse_arguments(description="Placement",
         {"name": "--task_root", "type": str, "default": "output"},
         {"name": "--config", "type": str, "default": "config"},
         {"name": "--device", "type": str, "default": "cuda"},
+        # headless
+        {"name": "--headless", "action": 'store_true', "default": False},
         ])
 
 def init_gym(cfgs, task_cfg=None):
@@ -115,6 +117,7 @@ if args.mode == "run_arti_free_control":
         with open("gapartnet_obj_min_z.json", "r") as f: gapartnet_obj_min_z = json.load(f)
         gapartnet_obj_min_z_ = gapartnet_obj_min_z[gapart_id]
         task_cfg["save_root"] = "/".join(task_cfgs_path.split("/")[:-1])
+        cfgs["HEADLESS"] = args.headless
         cfgs["USE_CUROBO"] = True
         cfgs["asset"]["arti_obj_root"] = ROOT
         cfgs["asset"]["arti_position_noise"] = 0.0
@@ -176,6 +179,7 @@ elif args.mode == "run_arti_open":
             
         # set the save root and other configurations
         task_cfg["save_root"] = "/".join(task_cfgs_path.split("/")[:-1])
+        cfgs["HEADLESS"] = args.headless
         cfgs["USE_CUROBO"] = False
         cfgs["asset"]["arti_obj_root"] = ROOT
         cfgs["asset"]["arti_position_noise"] = 0.0
@@ -196,19 +200,21 @@ elif args.mode == "run_arti_open":
         gym.get_gapartnet_anno()
         
         # render bbox for visualization and debug
-        if True:
+        if not cfgs["HEADLESS"] and True:
             gym.gym.clear_lines(gym.viewer)
-            for env_i in range(gym.num_envs):
-                for gapart_obj_i, gapart_raw_valid_anno in enumerate(gym.gapart_raw_valid_annos):
-                    
-                    all_bbox_now = gym.gapart_init_bboxes[gapart_obj_i]*cfgs["asset"]["arti_obj_scale"]
-                    
-                    rotation = R.from_quat(gym.arti_init_obj_rot_list[env_i])
-                    rotation_matrix = rotation.as_matrix()
-                    rotated_bbox_now = np.dot(all_bbox_now, rotation_matrix.T)
-                    
-                    all_bbox_now = rotated_bbox_now + gym.arti_init_obj_pos_list[env_i]
-
+        for env_i in range(gym.num_envs):
+            for gapart_obj_i, gapart_raw_valid_anno in enumerate(gym.gapart_raw_valid_annos):
+                
+                all_bbox_now = gym.gapart_init_bboxes[gapart_obj_i]*cfgs["asset"]["arti_obj_scale"]
+                
+                rotation = R.from_quat(gym.arti_init_obj_rot_list[env_i])
+                rotation_matrix = rotation.as_matrix()
+                rotated_bbox_now = np.dot(all_bbox_now, rotation_matrix.T)
+                
+               
+                all_bbox_now = rotated_bbox_now + gym.arti_init_obj_pos_list[env_i]
+                
+                if not cfgs["HEADLESS"] and True:
                     idx_set = [[0,1],[1,2],[1,5],[0,4],[0,3],[2,3],[2,6],[3,7],[4,5],[4,7],[5,6],[6,7]]
                     for part_i in range(len(gapart_raw_valid_anno)):
                         bbox_now_i = all_bbox_now[part_i]

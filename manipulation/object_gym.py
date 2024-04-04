@@ -97,6 +97,7 @@ class ObjectGym():
                 {"name": "--task_root", "type": str, "default": "gym_outputs_task_gen_ycb_0229"},
                 {"name": "--config", "type": str, "default": "config_render_api2"},
                 {"name": "--device", "type": str, "default": "cuda"},
+                {"name": "--headless", "action": 'store_true', "default": False},
                 ]
             )
 
@@ -311,7 +312,7 @@ class ObjectGym():
         self.gapart_raw_valid_annos = []
         for gapartnet_id in self.gapartnet_ids:
             # load object annotation
-            annotation_path = f"{self.asset_root}/gapartnet/{gapartnet_id}/link_annotation_gapartnet.json"
+            annotation_path = f"{self.asset_root}/{self.gapartnet_root}/{gapartnet_id}/link_annotation_gapartnet.json"
             anno = json.loads(open(annotation_path).read())
             num_link_anno = len(anno)
             gapart_raw_valid_anno = []
