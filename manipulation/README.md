@@ -1,12 +1,24 @@
 # Part Interaction
-
+![manipulation](assets/video-manip.gif)
 ## How to run the code
-Control the arm to open a drawer demo:
+### Control the arm to open a drawer demo:
 ```bash
 python run.py --mode run_arti_open
 ```
 
-Control the arm to any pose demo:
+If you want to run in a server (headless):
+```bash
+python run.py --mode run_arti_open --headless
+```
+If you want to render and save video (a bit slow): 
+```bash
+python run.py --mode run_arti_open --headless --save_video
+```
+
+More options, please see the code.
+
+
+### Control the arm to any pose demo:
 ```bash
 python run.py --mode run_arti_free_control
 ```
