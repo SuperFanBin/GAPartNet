@@ -22,7 +22,7 @@ For more information, please visit our [**project page**](https://pku-epic.githu
 ## 💡 News
 - `2024/4/4` We use IsaacGym to reimplement our interaction algorithm. See `manipulation` folder for more details.
   
-![manipulation](manipulation/assets/video-manip.gif)
+  ![manipulation](manipulation/assets/video-manip.gif)
   <!-- <center>
   <div style="display: flex; justify-content: center;">
     <img src="manipulation/assets/inter_before.jpg" alt="image1" width="200">
