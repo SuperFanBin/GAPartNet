@@ -9,3 +9,5 @@ test/
 visu/
 example_rendered/
 partnet_mobility_part
+ckpts/
+assets/
