@@ -52,7 +52,27 @@ and estimate the pose of it. We also provide visualization code. This is a visua
 ![example](gapartnet/output/example.png)
 ![example2](gapartnet/output/example2.png)
 
-## How to use our code and model: 
+## How to run the demo and inference code:
+### 1. Install dependencies
+  - Python 3.8
+  - Pytorch >= 1.11.0 (recommend 1.13.1+cu117)
+  - CUDA >= 11.3 (recommend 11.8)
+
+### 2. Install pip packages
+  ```
+  pip install -r requirements.txt
+  ```
+
+### 3. Compile pointnet2_ops
+  ```
+  cd pointnet2_ops_lib
+  pip install -e .
+  ```
+
+### 4. Run the demo in `demo.ipynb` and you will get:
+![demo](./example_assets/StorageFurniture_45780_0_1_03.png)
+
+## How to use our whole training code and model: 
 
 ### 1. Install dependencies
   - Python 3.8
